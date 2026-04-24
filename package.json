@@ -1,0 +1,22 @@
+{
+  "name": "vip-diamond-collection",
+  "version": "1.0.0",
+  "description": "VIP Diamond Membership Tiers - Luxury showcase website",
+  "main": "index.html",
+  "scripts": {
+    "deploy": "vercel --prod",
+    "dev": "vercel dev"
+  },
+  "keywords": [
+    "vip",
+    "diamond",
+    "luxury",
+    "membership",
+    "tiers"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "vercel": "^33.0.0"
+  }
+}

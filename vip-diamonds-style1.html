@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIP Diamond Levels - Luxury</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000000;
+            overflow-x: hidden;
+            font-family: 'Georgia', serif;
+            color: #fff;
+        }
+
+        /* Starry Background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Galaxy Effect */
+        .galaxy {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(88, 28, 135, 0.3) 0%, transparent 70%),
+                        radial-gradient(ellipse at 80% 20%, rgba(29, 78, 216, 0.2) 0%, transparent 50%),
+                        radial-gradient(ellipse at 20% 80%, rgba(139, 92, 246, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+        }
+
+        .title {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            text-align: center;
+            background: linear-gradient(90deg, #fff, #a0a0a0, #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.3em;
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #888;
+            margin-bottom: 4rem;
+            text-align: center;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        /* Diamond Grid */
+        .diamond-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        .diamond-card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.5s;
+            cursor: pointer;
+        }
+
+        .diamond-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 60px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Diamond Shape */
+        .diamond {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+        }
+
+        .diamond-top {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 60px solid transparent;
+            border-right: 60px solid transparent;
+            border-bottom: 40px solid;
+        }
+
+        .diamond-middle {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 30px;
+        }
+
+        .diamond-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-top: 50px solid;
+        }
+
+        /* White Diamond */
+        .white-diamond .diamond-top { border-bottom-color: #E8E8E8; }
+        .white-diamond .diamond-middle { background: linear-gradient(180deg, #FFFFFF 0%, #E8E8E8 100%); }
+        .white-diamond .diamond-bottom { border-top-color: #D0D0D0; }
+
+        /* Blue Diamond */
+        .blue-diamond .diamond-top { border-bottom-color: #60A5FA; }
+        .blue-diamond .diamond-middle { background: linear-gradient(180deg, #93C5FD 0%, #3B82F6 100%); }
+        .blue-diamond .diamond-bottom { border-top-color: #2563EB; }
+
+        /* Purple Diamond */
+        .purple-diamond .diamond-top { border-bottom-color: #C084FC; }
+        .purple-diamond .diamond-middle { background: linear-gradient(180deg, #D8B4FE 0%, #9333EA 100%); }
+        .purple-diamond .diamond-bottom { border-top-color: #7E22CE; }
+
+        /* Black Diamond */
+        .black-diamond .diamond-top { border-bottom-color: #404040; }
+        .black-diamond .diamond-middle { background: linear-gradient(180deg, #505050 0%, #1A1A1A 100%); }
+        .black-diamond .diamond-bottom { border-top-color: #0A0A0A; }
+
+        /* Sparkle Effect */
+        .sparkle {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .sparkle::before,
+        .sparkle::after {
+            content: '';
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 2s infinite;
+        }
+
+        .sparkle::before {
+            width: 4px;
+            height: 4px;
+            top: 20%;
+            left: 30%;
+            animation-delay: 0s;
+        }
+
+        .sparkle::after {
+            width: 3px;
+            height: 3px;
+            top: 60%;
+            right: 25%;
+            animation-delay: 1s;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Glow Effect */
+        .glow {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.3;
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.2; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.4; }
+        }
+
+        .white-diamond .glow { background: #FFFFFF; }
+        .blue-diamond .glow { background: #3B82F6; }
+        .purple-diamond .glow { background: #9333EA; }
+        .black-diamond .glow { background: #404040; }
+
+        /* Level Info */
+        .level-name {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.2em;
+        }
+
+        .level-subtitle {
+            font-size: 0.9rem;
+            color: #888;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .diamond-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .diamond-grid {
+                grid-template-columns: 1fr;
+            }
+            .title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Stars -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Galaxy Effect -->
+    <div class="galaxy"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <h1 class="title">VIP TIERS</h1>
+        <p class="subtitle">Exclusive Diamond Collection</p>
+
+        <div class="diamond-grid">
+            <!-- White Diamond -->
+            <div class="diamond-card white-diamond">
+                <div class="diamond">
+                    <div class="glow"></div>
+                    <div class="diamond-top"></div>
+                    <div class="diamond-middle"></div>
+                    <div class="diamond-bottom"></div>
+                    <div class="sparkle"></div>
+                </div>
+                <h3 class="level-name">WHITE</h3>
+                <p class="level-subtitle">Diamond</p>
+            </div>
+
+            <!-- Blue Diamond -->
+            <div class="diamond-card blue-diamond">
+                <div class="diamond">
+                    <div class="glow"></div>
+                    <div class="diamond-top"></div>
+                    <div class="diamond-middle"></div>
+                    <div class="diamond-bottom"></div>
+                    <div class="sparkle"></div>
+                </div>
+                <h3 class="level-name">BLUE</h3>
+                <p class="level-subtitle">Diamond</p>
+            </div>
+
+            <!-- Purple Diamond -->
+            <div class="diamond-card purple-diamond">
+                <div class="diamond">
+                    <div class="glow"></div>
+                    <div class="diamond-top"></div>
+                    <div class="diamond-middle"></div>
+                    <div class="diamond-bottom"></div>
+                    <div class="sparkle"></div>
+                </div>
+                <h3 class="level-name">PURPLE</h3>
+                <p class="level-subtitle">Diamond</p>
+            </div>
+
+            <!-- Black Diamond -->
+            <div class="diamond-card black-diamond">
+                <div class="diamond">
+                    <div class="glow"></div>
+                    <div class="diamond-top"></div>
+                    <div class="diamond-middle"></div>
+                    <div class="diamond-bottom"></div>
+                    <div class="sparkle"></div>
+                </div>
+                <h3 class="level-name">BLACK</h3>
+                <p class="level-subtitle">Diamond</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Generate stars
+        const starsContainer = document.getElementById('stars');
+        const starCount = 200;
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = Math.random() * 3 + 'px';
+            star.style.height = star.style.width;
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            starsContainer.appendChild(star);
+        }
+
+        // Add extra sparkles to diamonds
+        document.querySelectorAll('.diamond').forEach(diamond => {
+            for (let i = 0; i < 3; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.style.position = 'absolute';
+                sparkle.style.width = '2px';
+                sparkle.style.height = '2px';
+                sparkle.style.background = 'white';
+                sparkle.style.borderRadius = '50%';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animation = `sparkle ${Math.random() * 2 + 1}s infinite`;
+                sparkle.style.animationDelay = Math.random() * 2 + 's';
+                diamond.appendChild(sparkle);
+            }
+        });
+    </script>
+</body>
+</html>
